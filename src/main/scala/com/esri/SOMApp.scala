@@ -4,10 +4,15 @@ import com.typesafe.config.ConfigFactory
 import pb.ProgressBar
 
 import scala.annotation.tailrec
+import scala.collection.generic.Growable
 import scala.collection.mutable.ArrayBuffer
 
+/**
+  * App to SOM RGB Colors.
+  */
 object SOMApp extends App {
 
+  // Load the HOCON.
   val conf = ConfigFactory.load
 
   val numWeights = conf.getInt("numWeights")
@@ -22,6 +27,7 @@ object SOMApp extends App {
   val errImageWidth = conf.getInt("errImageWidth")
   val errImageHeight = conf.getInt("errImageHeight")
 
+  // Create a set on random colors.
   val weights = new ArrayBuffer[Weight](numWeights)
   var n = 0
   while (n < numWeights) {
@@ -37,7 +43,7 @@ object SOMApp extends App {
   pb.showTimeLeft = false
 
   @tailrec
-  def train(iter: Int, som: SOM, err: ArrayBuffer[Double]): SOM = {
+  def train(iter: Int, som: SOM, err: Growable[Double]): SOM = {
     pb += 1
     err += som.calcError(weights)
     if (iter == numIter)

@@ -7,6 +7,9 @@ import org.apache.spark.sql.types.StructType
 
 import scala.annotation.tailrec
 
+/**
+  * Spark based app to SOM "large" RGB colors.
+  */
 object SparkApp extends App {
   val spark = SparkSession
     .builder()
@@ -40,7 +43,7 @@ object SparkApp extends App {
       .cache()
 
     @tailrec
-    def _train(iter: Int, som: SOM): SOM = {
+    def train(iter: Int, som: SOM): SOM = {
       if (iter == numIter)
         som
       else {
@@ -54,12 +57,12 @@ object SparkApp extends App {
             Some(localSOM).iterator
           })
           .reduce(_ + _) / numPart.toDouble
-        _train(iter + 1, newSOM)
+        train(iter + 1, newSOM)
       }
     }
 
     println("Training...")
-    val som = _train(0, SOM(somSize))
+    val som = train(0, SOM(somSize))
 
     println("Saving...")
     ChartUtils.saveSOM(som, somPath, somSize, somCell)

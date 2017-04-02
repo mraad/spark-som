@@ -8,7 +8,7 @@ import scala.collection.generic.Growable
 import scala.collection.mutable.ArrayBuffer
 
 /**
-  * Standalone SOM App
+  * App to solve TSP using SOM.
   */
 object TSPApp extends App {
 
@@ -26,6 +26,7 @@ object TSPApp extends App {
   val errImagWidth = conf.getInt("errImageWidth")
   val errImageHeight = conf.getInt("errImageHeight")
 
+  // Create random cities.
   val cities = new ArrayBuffer[City](numCities)
   var n = 0
   while (n < numCities) {

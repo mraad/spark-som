@@ -3,6 +3,11 @@ package com.esri
 import scala.collection.mutable.ArrayBuffer
 import scala.math._
 
+/**
+  * Create a circular 1D SOM.
+  *
+  * @param nodes the network nodes.
+  */
 case class TSPSOM(nodes: Seq[TSPNode]) {
 
   private val lenNodes = nodes.length
@@ -44,6 +49,7 @@ case class TSPSOM(nodes: Seq[TSPNode]) {
     val bmu = findBMU(city)
     val adjNodes = nodes.foldLeft(new ArrayBuffer[TSPNode](lenNodes))((arr, node) => {
       val dist2 = node.dist2(bmu, lenNodes)
+      // TODO: do not cap by radius, just decay the node.
       if (dist2 <= radius2) {
         val theta = exp(dist2 / deno2)
         arr += node.train(city, alpha, theta)

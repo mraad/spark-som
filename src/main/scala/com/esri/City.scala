@@ -1,10 +1,10 @@
 package com.esri
 
 /**
-  * Class to represent a city
+  * Class to represent a city.
   *
-  * @param x the city x location
-  * @param y the city y location
+  * @param x the city x location.
+  * @param y the city y location.
   */
 case class City(x: Double, y: Double) {
 
@@ -40,7 +40,7 @@ object City {
   private val rnd = new java.security.SecureRandom()
 
   /**
-    * Create a City instance with coordinate between -1.0 and 1.0
+    * Create a City instance with random coordinate between -1.0 and 1.0
     *
     * @return a new City instance.
     */
