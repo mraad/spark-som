@@ -39,6 +39,7 @@ object SparkApp extends App {
       .schema(schema)
       .csv(rgbPath)
       .as[Weight]
+      // .randomSplit()
       .repartition(numPart)
       .cache()
 
